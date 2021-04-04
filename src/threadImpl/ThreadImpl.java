@@ -1,5 +1,7 @@
 package threadImpl;
 
+import java.util.stream.IntStream;
+
 class ThreadMain extends Thread{
     public void run() {
         try {
@@ -22,14 +24,8 @@ public class ThreadImpl {
     public static void main(String[] args) {
         {
             int n=8;
-            for(int i=0; i<n; i++) {
-                Thread object=new Thread(new ThreadMain());
-                object.start();
-            }
-            for(int i=0; i<n; i++) {
-                Thread object=new Thread(new ThreadMain2());
-                object.start();
-            }
+            IntStream.range(0, n).mapToObj(i -> new Thread(new ThreadMain())).forEach(Thread::start);
+            IntStream.range(0, n).mapToObj(i -> new Thread(new ThreadMain2())).forEach(Thread::start);
         }
     }
 }
